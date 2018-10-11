@@ -12,5 +12,7 @@ Route::group([
 
     $router->get('/', 'HomeController@index');
 //	$router->resource('users', UserController::class);
-
+    $router->resource('qrcode', QrcodeController::class);
+    $router->resource('expression', ExpressionController::class);
+    $router->resource('wheat', WheatController::class);
 });
