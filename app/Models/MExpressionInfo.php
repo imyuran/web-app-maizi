@@ -13,6 +13,6 @@ class MExpressionInfo extends Model
     public $table = "m_expression_info";
 
     protected $fillable = [
-        'type', 'admin_id', 'poster', 'step', 'key_1', 'key_2', 'key_3', 'key_4'
+        'type', 'admin_id', 'poster', 'step', 'key_1', 'key_2', 'key_3'
     ];
 }

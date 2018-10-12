@@ -20,7 +20,7 @@ class CreateMWheatLog extends Migration
             $table->integer('admin_id')->comment("上传人id")->index();
             $table->string('poster')->comment("上传图片");
 
-            $table->string('step')->comment("步骤");
+            $table->integer('steps')->comment("步骤");
             $table->string('key_1')->comment("一级描述");
             $table->string('key_2')->comment("二级描述");
             $table->string('key_3')->comment("三级描述");

@@ -10,6 +10,7 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use App\Helper\Utils;
 
 class WheatController extends Controller
 {
@@ -24,8 +25,8 @@ class WheatController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('小麦日志');
+            $content->description('列表');
 
             $content->body($this->grid());
         });
@@ -41,8 +42,8 @@ class WheatController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('小麦日志');
+            $content->description('编辑');
 
             $content->body($this->form()->edit($id));
         });
@@ -57,8 +58,8 @@ class WheatController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('小麦日志');
+            $content->description('新增');
 
             $content->body($this->form());
         });
@@ -74,9 +75,28 @@ class WheatController extends Controller
         return Admin::grid(MWheatLog::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
+            //二维码名称
+            $grid->qrcode_id('名称')->display(function ($id) {
+                $name = Utils::getQrcodeNameById($id);
+                return $name;
+            });
+//            $grid->type( '类型')->using(config('maizi.type'));
+            $grid->steps( '步骤')->using( config('maizi.steps'));
+            $grid->key_1( '一级描述');
+            $grid->key_2( '二级描述');
+            $grid->key_3( '三级描述');
+            $grid->key_4( '数值/等级');
 
-            $grid->created_at();
-            $grid->updated_at();
+            $grid->poster( '图片')->image();
+
+            $grid->admin_id('上传人')->display(function ($id) {
+                $name = Utils::getAdminNameById($id);
+                return $name;
+            });
+
+
+            $grid->created_at('创建时间');
+            $grid->updated_at( '更新时间');
         });
     }
 
@@ -88,11 +108,20 @@ class WheatController extends Controller
     protected function form()
     {
         return Admin::form(MWheatLog::class, function (Form $form) {
-
             $form->display('id', 'ID');
+            $form->display('qrcode_id', 'QID')->value(3);
+//            $form->select('type', '类型')->options(config("maizi.type"))->rules('required')->default(4);
+            $form->select('steps', '步骤')->options(config("maizi.steps"))->rules('required')->default('2.1');
+            $form->text('key_1', '一级描述')->rules('required');
+            $form->text('key_2', '二级描述');
+            $form->text('key_3', '三级描述');
+            $form->text('key_4', '数值/等级');
 
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+            $form->image('poster','上传照片')->move('/photos');
+            $form->hidden('admin_id')->value( Admin::user()->id );
+
+            $form->display('created_at', '创建时间');
+            $form->display('updated_at', '更新时间');
         });
     }
 }

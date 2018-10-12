@@ -36,4 +36,18 @@ class Utils
     {
         return self::getAdminInfoById($id)->name;
     }
+
+
+    public static function getQrcodeInfoById ($id)
+    {
+        $key = config('maizi.qrcodeInfo').'_'.$id;
+        return Cache::remember( $key, 10, function() use($id){
+            return DB::table('m_qrcode_info')->find($id);
+        });
+    }
+
+    public static function getQrcodeNameById ($id)
+    {
+        return self::getQrcodeInfoById($id)->name;
+    }
 }

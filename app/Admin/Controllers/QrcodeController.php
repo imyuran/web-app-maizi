@@ -118,7 +118,6 @@ class QrcodeController extends Controller
                 $url = config('app.url') . '/' . $qr_url;
                 $form->hidden('unique_id')->value($unique_id);
                 $form->hidden('url')->value($url);
-
             }
 
             $form->hidden('admin_id')->value( Admin::user()->id );
