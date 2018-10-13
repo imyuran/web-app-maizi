@@ -10,6 +10,7 @@ use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Helper\Utils;
+use App\Admin\Extensions\ExcelExpoter;
 
 class ExpressionController extends Controller
 {
@@ -74,8 +75,6 @@ class ExpressionController extends Controller
         return Admin::grid(MExpressionInfo::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-//
-//            $grid->type( '类型')->using(['f' => '女', 'm' => '男']);
             $grid->type( '类型')->using(config('maizi.type'));
             $grid->steps( '步骤')->using( config('maizi.steps'));
             $grid->key_1( '一级描述');
@@ -90,6 +89,15 @@ class ExpressionController extends Controller
 
             $grid->created_at('创建时间');
             $grid->updated_at( '更新时间');
+
+
+            $excel = new ExcelExpoter();
+            $excel->setAttr([
+                'id', '类型', '步骤', '一级描述', '二级描述', '三级描述', '对比图', '上传人', '创建时间'
+            ], [
+                'id', 'type', 'step', 'key_1', 'key_2', 'key_3', 'poster', 'admin_id', 'created_at'
+            ]);
+            $grid->exporter($excel);
         });
     }
 

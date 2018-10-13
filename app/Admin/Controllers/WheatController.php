@@ -11,6 +11,7 @@ use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Helper\Utils;
+use App\Admin\Extensions\ExcelExpoter;
 
 class WheatController extends Controller
 {
@@ -97,6 +98,18 @@ class WheatController extends Controller
 
             $grid->created_at('创建时间');
             $grid->updated_at( '更新时间');
+
+            $excel = new ExcelExpoter();
+            $excel->setAttr([
+                'id', '名称', '步骤', '一级描述', '二级描述', '三级描述', '数值/等级', '对比图', '上传人', '创建时间'
+            ], [
+                'id', 'qrcode_id', 'step', 'key_1', 'key_2', 'key_3', 'key_4', 'poster', 'admin_id', 'created_at'
+            ]);
+            $grid->exporter($excel);
+            //禁用操作
+            $grid->disableActions();
+            //禁用添加
+            $grid->disableCreateButton();
         });
     }
 

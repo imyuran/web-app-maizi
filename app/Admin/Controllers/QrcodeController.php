@@ -11,6 +11,7 @@ use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Helper\Utils;
+use App\Admin\Extensions\ExcelExpoter;
 
 class QrcodeController extends Controller
 {
@@ -76,12 +77,10 @@ class QrcodeController extends Controller
 
             $grid->id('ID')->sortable();
 
-            $grid->name( '名称');
+            $grid->name( '名称')->editable();
             $grid->url( '二维码')->image();
-//            dd(config("maizi.type"));
             $grid->type( '类型')->using(config('maizi.type'));
 
-//            $grid->admin_id( '二维码');
             $grid->admin_id('上传人')->display(function ($id) {
                 $name = Utils::getAdminNameById($id);
                 return $name;
@@ -89,6 +88,10 @@ class QrcodeController extends Controller
 
             $grid->created_at('创建时间');
             $grid->updated_at( '更新时间');
+
+            $excel = new ExcelExpoter();
+            $excel->setAttr(['id', '名称', '类型', '二维码', '上传人', '上传时间'], ['id', 'name', 'type', 'url', 'admin_id', 'created_at']);
+            $grid->exporter($excel);
 
         });
     }
@@ -114,8 +117,7 @@ class QrcodeController extends Controller
                 $form->hidden('url');
             } else {
                 $unique_id = uniqid();
-                $qr_url = Utils::createQrcode($unique_id, config("maizi.url.getQrcodeInfo"));
-                $url = config('app.url') . '/' . $qr_url;
+                $url = Utils::createQrcode($unique_id, config("maizi.url.getQrcodeInfo"));
                 $form->hidden('unique_id')->value($unique_id);
                 $form->hidden('url')->value($url);
             }
