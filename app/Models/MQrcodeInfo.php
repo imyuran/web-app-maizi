@@ -17,9 +17,9 @@ class MQrcodeInfo extends Model
         'type', 'name', 'url', 'admin_id' ,'unique_id'
     ];
 
+
     public function adminUser()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsTo('App\Models\AdminUsers', 'admin_id');
     }
-
 }

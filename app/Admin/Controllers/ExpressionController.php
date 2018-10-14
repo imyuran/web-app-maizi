@@ -9,7 +9,6 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
-use App\Helper\Utils;
 use App\Admin\Extensions\ExcelExpoter;
 
 class ExpressionController extends Controller
@@ -82,11 +81,7 @@ class ExpressionController extends Controller
             $grid->key_3( '三级描述');
 
             $grid->poster( '对比图')->image();
-            $grid->admin_id('上传人')->display(function ($id) {
-                $name = Utils::getAdminNameById($id);
-                return $name;
-            });
-
+            $grid->adminUser()->name('上传人');
             $grid->created_at('创建时间');
             $grid->updated_at( '更新时间');
 
@@ -95,7 +90,7 @@ class ExpressionController extends Controller
             $excel->setAttr([
                 'id', '类型', '步骤', '一级描述', '二级描述', '三级描述', '对比图', '上传人', '创建时间'
             ], [
-                'id', 'type', 'step', 'key_1', 'key_2', 'key_3', 'poster', 'admin_id', 'created_at'
+                'id', 'type', 'step', 'key_1', 'key_2', 'key_3', 'poster', 'admin_user.name', 'created_at'
             ]);
             $grid->exporter($excel);
         });

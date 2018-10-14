@@ -80,17 +80,12 @@ class QrcodeController extends Controller
             $grid->name( '名称')->editable();
             $grid->url( '二维码')->image();
             $grid->type( '类型')->using(config('maizi.type'));
-
-            $grid->admin_id('上传人')->display(function ($id) {
-                $name = Utils::getAdminNameById($id);
-                return $name;
-            });
-
+            $grid->adminUser()->name('上传人');
             $grid->created_at('创建时间');
             $grid->updated_at( '更新时间');
 
             $excel = new ExcelExpoter();
-            $excel->setAttr(['id', '名称', '类型', '二维码', '上传人', '上传时间'], ['id', 'name', 'type', 'url', 'admin_id', 'created_at']);
+            $excel->setAttr(['id', '名称', '类型', '二维码', '上传人', '上传时间'], ['id', 'name', 'type', 'url', 'admin_user.name', 'created_at']);
             $grid->exporter($excel);
 
         });

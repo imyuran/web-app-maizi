@@ -10,7 +10,6 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
-use App\Helper\Utils;
 use App\Admin\Extensions\ExcelExpoter;
 
 class WheatController extends Controller
@@ -76,12 +75,7 @@ class WheatController extends Controller
         return Admin::grid(MWheatLog::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            //二维码名称
-            $grid->qrcode_id('名称')->display(function ($id) {
-                $name = Utils::getQrcodeNameById($id);
-                return $name;
-            });
-//            $grid->type( '类型')->using(config('maizi.type'));
+            $grid->qrcode()->name('名称');
             $grid->steps( '步骤')->using( config('maizi.steps'));
             $grid->key_1( '一级描述');
             $grid->key_2( '二级描述');
@@ -89,21 +83,17 @@ class WheatController extends Controller
             $grid->key_4( '数值/等级');
 
             $grid->poster( '图片')->image();
-
-            $grid->admin_id('上传人')->display(function ($id) {
-                $name = Utils::getAdminNameById($id);
-                return $name;
-            });
+            $grid->adminUser()->name('上传人');
 
 
-            $grid->created_at('创建时间');
-            $grid->updated_at( '更新时间');
+            $grid->created_at('上传时间');
+//            $grid->updated_at( '更新时间');
 
             $excel = new ExcelExpoter();
             $excel->setAttr([
-                'id', '名称', '步骤', '一级描述', '二级描述', '三级描述', '数值/等级', '对比图', '上传人', '创建时间'
+                'id', '名称', '步骤', '一级描述', '二级描述', '三级描述', '数值/等级', '对比图', '上传人', '上传时间'
             ], [
-                'id', 'qrcode_id', 'step', 'key_1', 'key_2', 'key_3', 'key_4', 'poster', 'admin_id', 'created_at'
+                'id', 'qrcode.name', 'step', 'key_1', 'key_2', 'key_3', 'key_4', 'poster', 'admin_user.name', 'created_at'
             ]);
             $grid->exporter($excel);
             //禁用操作

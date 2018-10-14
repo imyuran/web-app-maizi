@@ -15,4 +15,9 @@ class MExpressionInfo extends Model
     protected $fillable = [
         'type', 'admin_id', 'poster', 'step', 'key_1', 'key_2', 'key_3'
     ];
+
+    public function adminUser()
+    {
+        return $this->belongsTo('App\Models\AdminUsers', 'admin_id');
+    }
 }

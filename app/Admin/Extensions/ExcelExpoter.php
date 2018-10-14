@@ -39,6 +39,7 @@ class ExcelExpoter extends AbstractExporter
                 $rows = collect([$head]); //写入标题
                 $sheet->rows($rows);
                 collect( $this->getData() )->map( function ($item,$k)use($body,$sheet,$title_array ) {
+//                    dd($item);
                     foreach ($body as $i=>$keyName){
                         $v = array_get($item, $keyName);
                         if($v && ($keyName == 'url' || $keyName == 'poster') ) { //判断图片列，如果是则放图片

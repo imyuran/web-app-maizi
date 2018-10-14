@@ -19,6 +19,7 @@ class CreateMWheatLog extends Migration
             $table->integer('qrcode_id')->comment("二维码id")->index();
             $table->integer('admin_id')->comment("上传人id")->index();
             $table->string('poster')->comment("上传图片");
+            $table->string('weather')->comment("天气");
 
             $table->integer('steps')->comment("步骤");
             $table->string('key_1')->comment("一级描述");
