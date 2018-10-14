@@ -12,7 +12,7 @@ class AdminUserController extends BaseController
         $info = request()->all();
         logger("loginInfo", $info);
 
-        return;
+        return $this->outPutSucc($info);
     }
 
     //注册
