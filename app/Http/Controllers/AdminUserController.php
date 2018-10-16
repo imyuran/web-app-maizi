@@ -39,7 +39,7 @@ class AdminUserController extends BaseController
             return $this->outPutErr('用户名已存在！');
         }
 
-        $ret = AdminUsers::created([
+        $ret = AdminUsers::create([
             'username' => $username,
             'name' => $username,
             'password' => Bcrypt($password),
@@ -57,5 +57,11 @@ class AdminUserController extends BaseController
     public  function  getAdminUserInfo($username)
     {
         return AdminUsers::where('username', $username)->first();
+    }
+
+    //用户修改信息
+    public function editAdminUserInfo()
+    {
+
     }
 }
