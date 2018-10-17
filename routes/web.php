@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect("/admin");
-});
+//Route::get('/', function () {
+//    return redirect("/admin");
+//});
 
 //Auth::routes();
 
