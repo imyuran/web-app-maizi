@@ -16,7 +16,7 @@ class WheatController extends BaseController
         if($type == "dump") {
             $list = Wheat::OrderBy("created_at", "desc")->limit(10)->get();
         } else {
-            $list = Wheat::where(["id", "<", $id])->OrderBy("created_at", "desc")->limit(10)->get();
+            $list = Wheat::where("id", "<", $id)->OrderBy("created_at", "desc")->limit(10)->get();
         }
         foreach ($list as &$item) {
             $item->qrcode_name = $item->qrcode->name;
