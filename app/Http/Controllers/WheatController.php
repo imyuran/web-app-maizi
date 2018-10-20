@@ -10,7 +10,17 @@ class WheatController extends BaseController
     //获取所有小麦日志
     public function getAllWheatLog()
     {
-        $list = Wheat::paginate(10);
+        $type = request("type", "dump");
+        $id = request("id", 0);
+
+        if($type == "dump") {
+            $list = Wheat::OrderBy("created_at", "desc")->limit(10);
+
+        } else {
+
+            $list = Wheat::where(["id", "<", $id])->OrderBy("created_at", "desc")->limit(10);
+        }
+
         foreach ($list as &$item) {
             $item->qrcode_name = $item->qrcode->name;
             $item->username = $item->adminUser->username;
