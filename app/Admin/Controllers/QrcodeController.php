@@ -79,7 +79,11 @@ class QrcodeController extends Controller
 
             $grid->name( '名称')->editable();
             $grid->url( '二维码')->image();
-            $grid->type( '类型')->using(config('maizi.type'));
+            $grid->type( '类型')->display(function ($type) {
+
+                return config('maizi.type.'.$type);
+
+            });
             $grid->adminUser()->name('上传人');
             $grid->created_at('创建时间');
             $grid->updated_at( '更新时间');

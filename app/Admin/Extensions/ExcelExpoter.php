@@ -42,6 +42,7 @@ class ExcelExpoter extends AbstractExporter
 //                    dd($item);
                     foreach ($body as $i=>$keyName){
                         $v = array_get($item, $keyName);
+
                         if($v && ($keyName == 'url' || $keyName == 'poster') ) { //判断图片列，如果是则放图片
                             $objDrawing = new PHPExcel_Worksheet_Drawing;
                             $v = public_path('/upload/'). $v; //拼接图片地址
@@ -55,7 +56,7 @@ class ExcelExpoter extends AbstractExporter
                             $objDrawing->setRotation(1);
                             $objDrawing->setWorksheet($sheet);
                         } else { //否则放置文字数据
-
+                            $v = config("maizi.".$keyName.".".$v) ?:$v;
                             $sheet->cell($title_array[$i] . ($k+2), function ($cell) use ($v) {
                                 $cell->setValue($v);
                             });

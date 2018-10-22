@@ -76,7 +76,11 @@ class WheatController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->qrcode()->name('名称');
-            $grid->steps( '步骤')->using( config('maizi.steps'));
+            $grid->steps( '步骤')->display(function ($steps) {
+
+                return config('maizi.steps.'.$steps);
+
+            });
             $grid->weather( '天气');
             $grid->key_1( '一级描述');
             $grid->key_2( '二级描述');
@@ -94,7 +98,7 @@ class WheatController extends Controller
             $excel->setAttr([
                 'id', '名称', '步骤', '天气', '一级描述', '二级描述', '三级描述', '数值/等级', '对比图', '上传人', '上传时间'
             ], [
-                'id', 'qrcode.name', 'step', 'weather', 'key_1', 'key_2', 'key_3', 'key_4', 'poster', 'admin_user.name', 'created_at'
+                'id', 'qrcode.name', 'steps', 'weather', 'key_1', 'key_2', 'key_3', 'key_4', 'poster', 'admin_user.name', 'created_at'
             ]);
             $grid->exporter($excel);
             //禁用操作

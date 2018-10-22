@@ -23,9 +23,9 @@ class CreateMWheatLog extends Migration
 
             $table->integer('steps')->comment("步骤");
             $table->string('key_1')->comment("一级描述");
-            $table->string('key_2')->comment("二级描述");
-            $table->string('key_3')->comment("三级描述");
-            $table->string('key_4')->comment("四级描述");
+            $table->string('key_2')->comment("二级描述")->nullable();
+            $table->string('key_3')->comment("三级描述")->nullable();
+            $table->string('key_4')->comment("四级描述")->nullable();
 
             $table->timestamps();
             $table->softDeletes();

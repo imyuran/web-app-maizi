@@ -74,8 +74,17 @@ class ExpressionController extends Controller
         return Admin::grid(MExpressionInfo::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->type( '类型')->using(config('maizi.type'));
-            $grid->steps( '步骤')->using( config('maizi.steps'));
+            $grid->type( '类型')->display(function ($type) {
+
+                return config('maizi.type.'.$type);
+
+            });
+
+            $grid->steps( '步骤')->display(function ($steps) {
+
+                return config('maizi.steps.'.$steps);
+
+            });
             $grid->key_1( '一级描述');
             $grid->key_2( '二级描述');
             $grid->key_3( '三级描述');
@@ -90,7 +99,7 @@ class ExpressionController extends Controller
             $excel->setAttr([
                 'id', '类型', '步骤', '一级描述', '二级描述', '三级描述', '对比图', '上传人', '创建时间'
             ], [
-                'id', 'type', 'step', 'key_1', 'key_2', 'key_3', 'poster', 'admin_user.name', 'created_at'
+                'id', 'type', 'steps', 'key_1', 'key_2', 'key_3', 'poster', 'admin_user.name', 'created_at'
             ]);
             $grid->exporter($excel);
         });
@@ -109,8 +118,8 @@ class ExpressionController extends Controller
             $form->select('type', '类型')->options(config("maizi.type"))->rules('required')->default(4);
             $form->select('steps', '步骤')->options(config("maizi.steps"))->rules('required')->default('2.1');
             $form->text('key_1', '一级描述')->rules('required');
-            $form->text('key_2', '二级描述');
-            $form->text('key_3', '三级描述');
+            $form->text('key_2', '二级描述')->rules('nullable');
+            $form->text('key_3', '三级描述')->rules('nullable');
 
             $form->image('poster','上传对照图')->move('/posters');
             $form->hidden('admin_id')->value( Admin::user()->id );
