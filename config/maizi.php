@@ -3,7 +3,7 @@
 return [
 
     "url" => [
-      "getQrcodeInfo" => env('APP_URL', 'http://localhost') . "?unique_id=",
+      "getQrcodeInfo" => env('APP_URL', 'http://localhost') . "?qrcode_flag=mai_zi_app_by_boby&unique_id=",
     ],
     "steps" => [
         21 => 'Feekes-8',

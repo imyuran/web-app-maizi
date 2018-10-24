@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MWheatLog as Wheat;
+use App\Models\MExpressionInfo as ExpressionInfo;
 
 class WheatController extends BaseController
 {
@@ -38,16 +39,35 @@ class WheatController extends BaseController
     public function addWheatLog()
     {
         $qrcode_id = request("qrcode_id");
+
         $admin_id = request("admin_id");
+        $type = request("type", 2);
+
         //图片上传
-        $qrcode_id = request("qrcode_id");
+        $poster = request("poster");
 
         $weather = request("weather");
-        $steps = request("steps");
+        $steps = request("steps", 21);
         $key_1 = request("key_1");
         $key_2 = request("key_2");
         $key_3 = request("key_3");
-        $key_4 = request("key_4");
+        $key_4 = request("key_4", "");
+        //是否新增添加表现型
+        $addExpression = request("addExpression", 0);
+
+        if($addExpression) {
+            ExpressionInfo::insert([
+                'type' => $type,
+                'admin_id' => $admin_id,
+                'steps' => $steps,
+                'key_1' => $key_1,
+                'key_2' => $key_2,
+                'key_3' => $key_3,
+                'key_4' => $key_4=== ""?0:1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
 
         $ret = Wheat::create([
             "qrcode_id" => $qrcode_id,

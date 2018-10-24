@@ -77,9 +77,7 @@ class WheatController extends Controller
             $grid->id('ID')->sortable();
             $grid->qrcode()->name('名称');
             $grid->steps( '步骤')->display(function ($steps) {
-
                 return config('maizi.steps.'.$steps);
-
             });
             $grid->weather( '天气');
             $grid->key_1( '一级描述');

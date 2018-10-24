@@ -15,11 +15,11 @@ class Utils
 {
     public static function createQrcode ( $code, $to_url) {
 
-        $qrcode_name = 'upload/qrcodes/'. date("Y_m_d-H_i_s-") . $code . '.png';
+        $qrcode_name = 'qrcodes/'. date("Y_m_d-H_i_s-") . $code . '.png';
         \QrCode::format('png')
             ->size(100)
             ->margin(.5)
-            ->generate($to_url.$code ,public_path( $qrcode_name));
+            ->generate($to_url.$code ,public_path( 'upload/' . $qrcode_name));
 
         return $qrcode_name;
     }

@@ -107,7 +107,14 @@ class QrcodeController extends Controller
 
 
             $form->display('id', 'ID');
-            $form->text('name', '名称')->rules('required|min:2;max:12');
+            $form->text('name', '名称')->rules('required|min:2;max:12')->rules(function ($form) {
+
+                // 如果不是编辑状态，则添加字段唯一验证
+//                if (!$id = $form->model()->id) {
+//                    return 'unique:m_qrcode_info,name';
+//                }
+
+            });
 //            $form->text('type', '类型');
             $form->select('type', '类型')->options(config("maizi.type"))->rules('required')->default(4);
 
@@ -125,6 +132,10 @@ class QrcodeController extends Controller
 
             $form->display('created_at', '创建时间');
             $form->display('updated_at', '更新时间');
+
+//            $form->saving(function (Form $form) {
+//
+//            });
         });
     }
 }

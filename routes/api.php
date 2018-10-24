@@ -21,10 +21,13 @@ Route::any('/login', "AdminUserController@login");
 //注册
 Route::any('/register', "AdminUserController@register");
 
-//获取所有表现型
-Route::any('/expression/getAllExpression', "ExpressionController@getAllExpression");
+//获取某一步骤所有表现型
+Route::any('/expression/getAllExpressionBySteps', "ExpressionController@getAllExpressionBySteps");
 //添加新的表现型
-Route::any('/expression/getAllExpression', "ExpressionController@getAllExpression");
+Route::any('/expression/addExpression', "ExpressionController@addExpression");
+
+//获取二维码信息
+Route::any('/qrcode/getQrcodeByName', "QrcodeController@getQrcodeByName");
 
 //获取所有小麦日志
 Route::any('/wheat/getAllWheatLog', "WheatController@getAllWheatLog");
