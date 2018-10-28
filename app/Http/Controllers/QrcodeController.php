@@ -14,6 +14,11 @@ class QrcodeController extends BaseController
 
         $ret = QrcodeInfo::where("name", $search)->orWhere("unique_id", $search)->first();
 
-        return $this->outPutSucc($ret);
+        if($ret) {
+            $ret->typeStr = config("maizi.type." . $ret->type);
+            return $this->outPutSucc($ret);
+        } else {
+            return $this->outPutErr("未查询到{$search}的信息！");
+        }
     }
 }
