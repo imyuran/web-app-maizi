@@ -26,16 +26,17 @@ class QrcodeController extends BaseController
             }
             $key_1 = array_unique($key_1);
             $new = [];
+            $end = [];
             foreach ($key_1 as $k=>$v) {
                 $new['value'] = $v;
                 $new['text'] = $v;
-                $key_1[$k] = $new;
+                $end[] = $new;
             }
 
             $ret = [
                 'qrcode' => $list,
                 'expression' => $exp,
-                'key_1' => $key_1
+                'key_1' => $end
             ];
 
 
