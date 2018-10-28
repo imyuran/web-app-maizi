@@ -25,9 +25,9 @@ class QrcodeController extends BaseController
 
             $new = [];
             $end = [];
-            foreach ($key_1 as $k=>$v) {
-                $new['value'] = $v;
-                $new['text'] = $v;
+            foreach ($key_1 as $v) {
+                $new['value'] = $v->key_1;
+                $new['text'] = $v->key_1;
                 $end[] = $new;
             }
 

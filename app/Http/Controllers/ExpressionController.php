@@ -33,9 +33,9 @@ class ExpressionController extends BaseController
 
         $new = [];
         $end = [];
-        foreach ($list as $k=>$v) {
-            $new['value'] = $v;
-            $new['text'] = $v;
+        foreach ($list as $v) {
+            $new['value'] = $v->$select;
+            $new['text'] = $v->$select;
             $end[] = $new;
         }
         return $this->outPutSucc( $end );
