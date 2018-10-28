@@ -18,13 +18,11 @@ class QrcodeController extends BaseController
         if($list) {
             $list->typeStr = config("maizi.type." . $list->type);
 
-            $exp = ExpressionInfo::where("steps", 21)->get();
+            $where = [
+                ["steps", 21]
+            ];
+            $key_1 = ExpressionInfo::getNextExpression($where, "key_1");
 
-            $key_1 = [];
-            foreach ($exp as &$item) {
-                $key_1[] = $item->key_1;
-            }
-            $key_1 = array_unique($key_1);
             $new = [];
             $end = [];
             foreach ($key_1 as $k=>$v) {
@@ -35,7 +33,6 @@ class QrcodeController extends BaseController
 
             $ret = [
                 'qrcode' => $list,
-                'expression' => $exp,
                 'key_1' => $end
             ];
 

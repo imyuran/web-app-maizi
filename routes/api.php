@@ -21,8 +21,8 @@ Route::any('/login', "AdminUserController@login");
 //注册
 Route::any('/register', "AdminUserController@register");
 
-//获取某一步骤所有表现型
-Route::any('/expression/getAllExpressionBySteps', "ExpressionController@getAllExpressionBySteps");
+//获取下一步骤所有表现型
+Route::any('/expression/getNextExpression', "ExpressionController@getNextExpression");
 //添加新的表现型
 Route::any('/expression/addExpression', "ExpressionController@addExpression");
 

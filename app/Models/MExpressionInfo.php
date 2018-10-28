@@ -20,4 +20,9 @@ class MExpressionInfo extends Model
     {
         return $this->belongsTo('App\Models\AdminUsers', 'admin_id');
     }
+
+    static public function getNextExpression($where, $select)
+    {
+        return self::distinct()->where($where)->select($select)->get();
+    }
 }

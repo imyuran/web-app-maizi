@@ -7,32 +7,38 @@ use App\Models\MExpressionInfo as ExpressionInfo;
 
 class ExpressionController extends BaseController
 {
-    //获取某一阶段所有表现型
-    public function getAllExpressionBySteps()
+    //获取下一阶段所有表现型
+    public function getNextExpression()
     {
         $steps = request("steps", 21);
+        $select = request("select", '');
 
-//        dump($steps);
-        $list = ExpressionInfo::where("steps", $steps)->get();
+        $key_1 = request("key_1", '');
+        $key_2 = request("key_2", '');
+        $key_3 = request("key_3", '');
 
-        $key_1 = [];
-        foreach ($list as &$item) {
-            $key_1[] = $item->key_1;
+        $where = [
+            ['steps' ,$steps]
+        ];
+        if($key_1) {
+            $where[] = ['key_1', $key_1];
         }
-        $key_1 = array_unique($key_1);
+        if($key_2) {
+            $where[] = ['key_2', $key_2];
+        }
+        if($key_3) {
+            $where[] = ['key_3', $key_3];
+        }
+        $list = ExpressionInfo::getNextExpression($where, $select);
 
         $new = [];
-        foreach ($key_1 as $k=>$v) {
+        $end = [];
+        foreach ($list as $k=>$v) {
             $new['value'] = $v;
             $new['text'] = $v;
-            $key_1[$k] = $new;
+            $end[] = $new;
         }
-
-        $ret = [
-            'expressions' => $list,
-            'key_1' => $key_1
-        ];
-        return $this->outPutSucc($ret);
+        return $this->outPutSucc( $end );
     }
 
 
