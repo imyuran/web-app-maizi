@@ -29,15 +29,20 @@ class ExpressionController extends BaseController
         if($key_3) {
             $where[] = ['key_3', $key_3];
         }
+
+
         $list = ExpressionInfo::getNextExpression($where, $select);
 
         $new = [];
         $end = [];
-        foreach ($list as $v) {
-            $new['value'] = $v->$select;
-            $new['text'] = $v->$select;
-            $end[] = $new;
+        if( !$list->isEmpty() ) {
+            foreach ($list as $v) {
+                $new['value'] = $v->$select;
+                $new['text'] = $v->$select;
+                $end[] = $new;
+            }
         }
+
         return $this->outPutSucc( $end );
     }
 
