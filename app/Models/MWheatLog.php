@@ -13,7 +13,7 @@ class MWheatLog extends Model
     public $table = "m_wheat_log";
 
     protected $fillable = [
-        'qrcode_id', 'admin_id', 'poster', 'step', 'key_1', 'key_2', 'key_3', 'key_4'
+        'qrcode_id', 'admin_id', 'poster', 'steps', 'key_1', 'key_2', 'key_3', 'key_4', 'weather'
     ];
 
     public function adminUser()
