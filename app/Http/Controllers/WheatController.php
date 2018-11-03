@@ -44,12 +44,12 @@ class WheatController extends BaseController
         $type = request("type", 2);
 
         //图片上传
-        $poster = request()->file('poster')->store('upload/posters/');
+        $poster = request()->file('poster')->store('upload/posters');
 
         if(!$poster) {
             return $this->outPutErr('网络错误，删除失败！');
         }
-
+        $poster = str_replace("upload","", $poster );
         $weather = request("weather");
         $steps = request("steps", 21);
         $key_1 = request("key_1");
