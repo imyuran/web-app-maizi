@@ -12,10 +12,10 @@ class WheatController extends BaseController
     //获取所有小麦日志
     public function getAllWheatLog()
     {
-        $type = request("type", "dump");
+        $type = request("type", "down");
         $id = request("id", 0);
 
-        if($type == "dump") {
+        if($type == "down") {
             if($id > 0) {
                 $list = Wheat::where("id", ">", $id)->limit(10)->get();
             } else {
