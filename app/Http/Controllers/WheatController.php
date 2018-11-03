@@ -39,8 +39,8 @@ class WheatController extends BaseController
     //上传新的小麦日志
     public function addWheatLog()
     {
-        $qrcode_id = request("qrcodeId");
-        $admin_id = request("adminId");
+        $qrcode_id = request("qrcode_id");
+        $admin_id = request("admin_id");
         $type = request("type", 2);
 
         //图片上传
