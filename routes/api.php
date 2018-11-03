@@ -35,9 +35,6 @@ Route::any('/wheat/getAllWheatLog', "WheatController@getAllWheatLog");
 //获取用户自己上传的所有小麦日志
 Route::any('/wheat/getUserAllWheatLog', "WheatController@getUserAllWheatLog");
 
-//上传图片
-Route::any('/wheat/uploadPicture', "WheatController@uploadPicture");
-
 //上传新的小麦日志
 Route::any('/wheat/addWheatLog', "WheatController@addWheatLog");
 //编辑小麦日志
