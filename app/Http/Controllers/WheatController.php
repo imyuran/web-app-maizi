@@ -16,7 +16,11 @@ class WheatController extends BaseController
         $id = request("id", 0);
 
         if($type == "dump") {
-            $list = Wheat::where("id", ">", $id)->limit(10)->get();
+            if($id > 0) {
+                $list = Wheat::where("id", ">", $id)->limit(10)->get();
+            } else {
+                $list = Wheat::OrderBy("created_at", "desc")->limit(10)->get();
+            }
         } else {
             $list = Wheat::where("id", "<", $id)->OrderBy("created_at", "desc")->limit(10)->get();
         }
