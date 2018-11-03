@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MWheatLog as Wheat;
 use App\Models\MExpressionInfo as ExpressionInfo;
+use Illuminate\Support\Facades\Storage;
 
 class WheatController extends BaseController
 {
@@ -39,18 +40,21 @@ class WheatController extends BaseController
     public function addWheatLog()
     {
         $qrcode_id = request("qrcode_id");
-
         $admin_id = request("admin_id");
         $type = request("type", 2);
 
         //图片上传
-        $poster = request("poster");
+        $poster = request()->file('poster')->store('upload/posters/');
+
+        if(!$poster) {
+            return $this->outPutErr('网络错误，删除失败！');
+        }
 
         $weather = request("weather");
         $steps = request("steps", 21);
         $key_1 = request("key_1");
-        $key_2 = request("key_2");
-        $key_3 = request("key_3");
+        $key_2 = request("key_2","");
+        $key_3 = request("key_3","");
         $key_4 = request("key_4", "");
         //是否新增添加表现型
         $addExpression = request("addExpression", 0);
@@ -74,6 +78,7 @@ class WheatController extends BaseController
             "admin_id" => $admin_id,
             "weather" => $weather,
             "steps" => $steps,
+            'poster' => $poster,
             "key_1" => $key_1,
             "key_2" => $key_2,
             "key_3" => $key_3,
@@ -141,16 +146,4 @@ class WheatController extends BaseController
         }
     }
 
-    //上传图片
-    public function uploadPicture()
-    {
-        $picture = request()->file('picture');
-        $store_result = $picture->store('photo');
-
-        if($store_result) {
-            return $this->outPutSucc($store_result);
-        } else {
-            return $this->outPutErr('网络错误，删除失败！');
-        }
-    }
 }
