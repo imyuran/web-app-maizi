@@ -140,4 +140,17 @@ class WheatController extends BaseController
             return $this->outPutErr('网络错误，删除失败！');
         }
     }
+
+    //上传图片
+    public function uploadPicture()
+    {
+        $picture = request()->file('picture');
+        $store_result = $picture->store('photo');
+
+        if($store_result) {
+            return $this->outPutSucc($store_result);
+        } else {
+            return $this->outPutErr('网络错误，删除失败！');
+        }
+    }
 }
