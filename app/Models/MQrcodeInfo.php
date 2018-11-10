@@ -14,7 +14,7 @@ class MQrcodeInfo extends Model
     public $table = "m_qrcode_info";
 
     protected $fillable = [
-        'type', 'name', 'url', 'admin_id' ,'unique_id'
+        'type', 'name', 'url', 'admin_id' ,'unique_id', 'created_at', 'updated_at'
     ];
 
 

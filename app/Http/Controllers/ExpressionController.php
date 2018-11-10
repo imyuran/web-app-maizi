@@ -30,7 +30,7 @@ class ExpressionController extends BaseController
             $where[] = ['key_3', $key_3];
         }
 
-
+        
         $list = ExpressionInfo::getNextExpression($where, $select);
 
         $new = [];
@@ -38,7 +38,8 @@ class ExpressionController extends BaseController
         if( !$list->isEmpty() ) {
             foreach ($list as $v) {
                 $new['value'] = $v->$select;
-                $new['text'] = $v->$select;
+                $new['text']  = $v->$select;
+                $new['poster'] = $v->poster;
                 $end[] = $new;
             }
         }

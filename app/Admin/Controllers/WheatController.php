@@ -85,22 +85,33 @@ class WheatController extends Controller
             $grid->key_3( '三级描述');
             $grid->key_4( '数值/等级');
 
-            $grid->poster( '图片')->image();
+            // $grid->poster( '图片')->image();
             $grid->adminUser()->name('上传人');
 
 
             $grid->created_at('上传时间');
 //            $grid->updated_at( '更新时间');
+//            
+            $grid->actions(function ($actions) {
+
+                $actions->disableDelete();
+                $actions->disableEdit();
+
+                if ($poster = $actions->row->poster ) {
+                    $poster = config('app.url') . '/upload/'. $poster;
+                    $actions->append('<a href="'.$poster.'"  target="_blank"><i class="fa fa-image"></i></a>');
+                }
+                
+            });
 
             $excel = new ExcelExpoter();
             $excel->setAttr([
-                'id', '名称', '步骤', '天气', '一级描述', '二级描述', '三级描述', '数值/等级', '对比图', '上传人', '上传时间'
+                'id', '名称', '步骤', '天气', '一级描述', '二级描述', '三级描述', '数值/等级',  '上传人', '上传时间'
             ], [
-                'id', 'qrcode.name', 'steps', 'weather', 'key_1', 'key_2', 'key_3', 'key_4', 'poster', 'admin_user.name', 'created_at'
+                'id', 'qrcode.name', 'steps', 'weather', 'key_1', 'key_2', 'key_3', 'key_4', 'admin_user.name', 'created_at'
             ]);
             $grid->exporter($excel);
-            //禁用操作
-            $grid->disableActions();
+
             //禁用添加
             $grid->disableCreateButton();
         });

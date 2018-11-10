@@ -89,17 +89,26 @@ class ExpressionController extends Controller
             $grid->key_2( '二级描述');
             $grid->key_3( '三级描述');
 
-            $grid->poster( '对比图')->image();
+            // $grid->poster( '对比图')->image();
             $grid->adminUser()->name('上传人');
             $grid->created_at('创建时间');
             $grid->updated_at( '更新时间');
 
+            $grid->actions(function ($actions) {
+
+                if ($poster = $actions->row->poster ) {
+                    $poster = config('app.url') . '/upload/'. $poster;
+                    $actions->append('<a href="'.$poster.'"  target="_blank"><i class="fa fa-image"></i></a>');
+                }
+
+            });
+
 
             $excel = new ExcelExpoter();
             $excel->setAttr([
-                'id', '类型', '步骤', '一级描述', '二级描述', '三级描述', '对比图', '上传人', '创建时间'
+                'id', '类型', '步骤', '一级描述', '二级描述', '三级描述',  '上传人', '创建时间'
             ], [
-                'id', 'type', 'steps', 'key_1', 'key_2', 'key_3', 'poster', 'admin_user.name', 'created_at'
+                'id', 'type', 'steps', 'key_1', 'key_2', 'key_3', 'admin_user.name', 'created_at'
             ]);
             $grid->exporter($excel);
         });
