@@ -23,6 +23,6 @@ class MExpressionInfo extends Model
 
     static public function getNextExpression($where, $select)
     {
-        return self::distinct()->where($where)->whereNotNull($select)->select($select, "poster")->get();
+        return self::where($where)->whereNotNull($select)->select($select, "poster")->groupBy($select)->get();
     }
 }
