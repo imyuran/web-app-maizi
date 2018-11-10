@@ -37,7 +37,7 @@ class ExpressionController extends BaseController
         $end = [];
         if( !$list->isEmpty() ) {
             foreach ($list as $v) {
-                $new['value'] = $v->$select;
+                // $new['value'] = $v->$select;
                 $new['text']  = $v->$select;
                 $new['poster'] = $v->poster;
                 $end[] = $new;

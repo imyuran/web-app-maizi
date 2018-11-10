@@ -43,51 +43,40 @@ class WheatController extends BaseController
     //上传新的小麦日志
     public function addWheatLog()
     {
-        $qrcode_id = request("qrcode_id");
-        $admin_id = request("admin_id");
-        $type = request("type", 2);
+        $qrcode_id  = request("qrcode_id");
+        $admin_id   = request("admin_id");
+        $type       = request("type", 2);
+        $image_flag = request("image_flag");
 
-        //图片上传
-        $poster = request()->file('poster')->store('upload/posters');
 
-        if(!$poster) {
-            return $this->outPutErr('网络错误，删除失败！');
-        }
-        $poster = str_replace("upload","", $poster );
         $weather = request("weather");
         $steps = request("steps", 21);
         $key_1 = request("key_1");
         $key_2 = request("key_2","");
         $key_3 = request("key_3","");
         $key_4 = request("key_4", "");
-        //是否新增添加表现型
-        $addExpression = request("addExpression", 0);
-
-        if($addExpression) {
-            ExpressionInfo::insert([
-                'type' => $type,
-                'admin_id' => $admin_id,
-                'steps' => $steps,
-                'key_1' => $key_1,
-                'key_2' => $key_2,
-                'key_3' => $key_3,
-                'key_4' => $key_4=== ""?0:1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
-
-        $ret = Wheat::create([
+       
+        $data = [
             "qrcode_id" => $qrcode_id,
             "admin_id" => $admin_id,
             "weather" => $weather,
             "steps" => $steps,
-            'poster' => $poster,
             "key_1" => $key_1,
             "key_2" => $key_2,
             "key_3" => $key_3,
             "key_4" => $key_4,
-        ]);
+        ];
+
+        //图片上传
+        if($image_flag) {
+            $poster = request()->file('poster')->store('upload/posters');
+            if(!$poster) {
+                return $this->outPutErr('网络错误，删除失败！');
+            }
+            $data['poster'] = str_replace("upload","", $poster );
+        }
+
+        $ret = Wheat::create($data);
 
         if($ret) {
             return $this->outPutSucc($ret);
