@@ -13,7 +13,7 @@ class WheatController extends BaseController
     public function getAllWheatLog()
     {
         $type = request("type", "down");
-        $id = request("id", 0);
+        $id   = request("id", 0);
 
         if($type == "down") {
             if($id > 0) {

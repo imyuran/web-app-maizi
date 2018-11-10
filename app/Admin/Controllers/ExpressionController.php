@@ -130,7 +130,7 @@ class ExpressionController extends Controller
             $form->text('key_2', '二级描述')->rules('nullable');
             $form->text('key_3', '三级描述')->rules('nullable');
 
-            $form->image('poster','上传对照图')->move('/posters');
+            $form->image('poster','上传对照图')->move('/posters')->removable();
             $form->hidden('admin_id')->value( Admin::user()->id );
 
             $form->display('created_at', '创建时间');
