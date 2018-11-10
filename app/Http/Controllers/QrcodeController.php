@@ -33,7 +33,7 @@ class QrcodeController extends BaseController
 
             $ret = [
                 'qrcode' => $list,
-                'key_1'  => $end
+                'key_1'  => $end,
                 'time'   => date("Y-m-d H:i", time())
             ];
 
