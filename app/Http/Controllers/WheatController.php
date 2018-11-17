@@ -25,8 +25,8 @@ class WheatController extends BaseController
             $list = Wheat::where("id", "<", $id)->OrderBy("created_at", "desc")->limit(10)->get();
         }
         foreach ($list as &$item) {
-            $item->qrcode_name = $item->qrcode->name;
-            $item->username = $item->adminUser->username;
+            $item->qrcode_name = @$item->qrcode->name;
+            $item->username = @$item->adminUser->username;
             $item->steps_str = array_get( config('maizi.steps'),$item->steps );
         }
 //        dd($list->toArray());
