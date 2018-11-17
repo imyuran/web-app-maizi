@@ -32,7 +32,7 @@ class MWheatLog extends Model
 
         return $this->belongsTo( 'App\Models\MQrcodeInfo', 'qrcode_id')->withDefault(function ($qrcode) {
                 $one = DB::table('m_qrcode_info')->find($this->qrcode_id);
-                $qrcode->name = $one->name;
+                @$qrcode->name = $one->name;
            });
 
         

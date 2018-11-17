@@ -11,6 +11,7 @@ use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Extensions\ExcelExpoter;
+use Illuminate\Support\Facades\DB;
 
 class WheatController extends Controller
 {
@@ -75,7 +76,12 @@ class WheatController extends Controller
         return Admin::grid(MWheatLog::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->qrcode()->name('名称');
+
+            $grid->qrcode_id('名称')->display(function() {
+
+                return $this->qrcode->name ?: DB::table('m_qrcode_info')->where('id', $this->qrcode_id)->value('name');
+            });
+
             $grid->steps( '步骤')->display(function ($steps) {
                 return config('maizi.steps.'.$steps);
             });
