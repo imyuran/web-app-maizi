@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class MWheatLog extends Model
 {
@@ -19,10 +20,21 @@ class MWheatLog extends Model
     public function adminUser()
     {
         return $this->belongsTo('App\Models\AdminUsers', 'admin_id');
+
+        return $this->belongsTo('App\Models\AdminUsers', 'admin_id')->withDefault([
+            'username' => "用户已被删除"
+        ]);
     }
 
     public function qrcode()
     {
-        return $this->belongsTo('App\Models\MQrcodeInfo', 'qrcode_id');
+        // return $this->belongsTo('App\Models\MQrcodeInfo', 'qrcode_id');
+
+        return $this->belongsTo( 'App\Models\MQrcodeInfo', 'qrcode_id')->withDefault(function ($qrcode) {
+                $one = DB::table('m_qrcode_info')->find($this->qrcode_id);
+                $qrcode->name = $one->name;
+           });
+
+        
     }
 }

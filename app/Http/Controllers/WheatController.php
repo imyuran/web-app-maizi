@@ -26,8 +26,8 @@ class WheatController extends BaseController
         }
         foreach ($list as &$item) {
             $item->qrcode_name = @$item->qrcode->name;
-            $item->username = @$item->adminUser->username;
-            $item->steps_str = array_get( config('maizi.steps'),$item->steps );
+            $item->username    = @$item->adminUser->username;
+            $item->steps_str   = array_get( config('maizi.steps'),$item->steps );
         }
 //        dd($list->toArray());
         return $this->outPutSucc($list);
