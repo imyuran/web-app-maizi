@@ -97,7 +97,9 @@ class ExpressionController extends Controller
             $grid->actions(function ($actions) {
 
                 if ($poster = $actions->row->poster ) {
-                    $poster = config('app.url') . '/upload/'. $poster;
+                    // $poster = config('app.url') . '/upload/'. $poster;
+                    $poster = 'http://'. config('filesystems.disks.oss.bucket')
+                            .'.'.config('filesystems.disks.oss.endpoint') . '/'. $poster ;
                     $actions->append('<a href="'.$poster.'"  target="_blank"><i class="fa fa-image"></i></a>');
                 }
 
@@ -130,7 +132,8 @@ class ExpressionController extends Controller
             $form->text('key_2', '二级描述')->rules('nullable');
             $form->text('key_3', '三级描述')->rules('nullable');
 
-            $form->image('poster','上传对照图')->move('/posters')->removable();
+            $form->image('poster','上传对照图')->removable();
+            // $form->image('poster','上传对照图')->move('/posters')->removable();
             $form->hidden('admin_id')->value( Admin::user()->id );
 
             $form->display('created_at', '创建时间');

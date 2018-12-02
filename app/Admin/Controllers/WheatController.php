@@ -104,7 +104,9 @@ class WheatController extends Controller
                 $actions->disableEdit();
 
                 if ($poster = $actions->row->poster ) {
-                    $poster = config('app.url') . '/upload/'. $poster;
+                    // $poster = config('app.url') . '/upload/'. $poster;
+                    $poster = 'http://'. config('filesystems.disks.oss.bucket')
+                            .'.'.config('filesystems.disks.oss.endpoint') . '/'. $poster ;
                     $actions->append('<a href="'.$poster.'"  target="_blank"><i class="fa fa-image"></i></a>');
                 }
                 
@@ -141,7 +143,7 @@ class WheatController extends Controller
             $form->text('key_3', '三级描述');
             $form->text('key_4', '数值/等级');
 
-            $form->image('poster','上传照片')->move('/photos');
+            $form->image('poster','上传照片');
             $form->hidden('admin_id')->value( Admin::user()->id );
 
             $form->display('created_at', '创建时间');

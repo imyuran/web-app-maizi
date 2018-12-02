@@ -180,6 +180,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         //二维码
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        //oss
+        Jacobcyl\AliOSS\AliOssServiceProvider::class,
     ],
 
     /*

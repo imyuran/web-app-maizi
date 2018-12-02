@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    // 'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => 'oss',
 
     /*
     |--------------------------------------------------------------------------
@@ -70,6 +71,18 @@ return [
             'url' => env('APP_URL').'/upload',
         ],
 
+        'oss' => [
+                'driver'        => 'oss',
+                'access_id'     => 'LTAIUJH7IhEgWVqf',
+                'access_key'    => 'GaIrHmqV5y1mzv4W3Rcdiiwm8MPRgt',
+                'bucket'        => 'wheat-space',
+                'endpoint'      => 'oss-cn-hangzhou.aliyuncs.com', 
+                // 'endpoint_internal' => 'oss-cn-hangzhou-internal.aliyuncs.com', 
+                // 'cdnDomain'     => '<CDN domain, cdn域名>',
+                'ssl'           => false,
+                'isCName'       => false,
+                'debug'         => true,
+        ],
 
     ],
 

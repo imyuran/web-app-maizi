@@ -10,17 +10,22 @@ namespace App\Helper;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class Utils
 {
     public static function createQrcode ( $code, $to_url) {
 
         $qrcode_name = 'qrcodes/'. date("Y_m_d-H_i_s-") . $code . '.png';
-        \QrCode::format('png')
+        $contents = \QrCode::format('png')
             ->size(100)
             ->margin(.5)
-            ->generate($to_url.$code ,public_path( 'upload/' . $qrcode_name));
+            ->generate($to_url.$code);
+            // ->generate($to_url.$code ,public_path( 'upload/' . $qrcode_name));
 
+
+        //上传到阿里云
+        Storage::put($qrcode_name, $contents); 
         return $qrcode_name;
     }
 
